@@ -1,0 +1,13 @@
+﻿{
+  "format": 1,
+  "id": "example.hello-octopus",
+  "name": "Hello Octopus",
+  "version": "1.0.0",
+  "author": "Octopus",
+  "description": "Return the title of the active Revit model.",
+  "family": "Read",
+  "changesModel": false,
+  "inputSchema": { "type": "object", "properties": {} },
+  "entry": "script.cs",
+  "revit": ["2025"]
+}

@@ -1,0 +1,1 @@
+﻿return ctx.Doc.Title;

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>octoskill</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../RevitProjectBrain/SkillPackages.cs" Link="SkillPackages.cs" />
+    <ProjectReference Include="../OctopusScripts/OctopusScripts.csproj" />
+  </ItemGroup>
+</Project>

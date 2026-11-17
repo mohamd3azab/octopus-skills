@@ -1,0 +1,40 @@
+﻿name: Publish reviewed skills
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: skills-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet build tools/OctopusSkill/OctopusSkill.csproj -c Release
+      - name: Validate, sign and index
+        env:
+          OCTOPUS_SIGNING_KEY: ${{ secrets.OCTOPUS_SIGNING_KEY }}
+        run: dotnet tools/OctopusSkill/bin/Release/net8.0/octoskill.dll index skills -o site --sign-key-env OCTOPUS_SIGNING_KEY
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
